@@ -6,7 +6,7 @@ function App() {
     <>
       <div className="flex justify-center items-center">
         <form className="flex flex-col gap-4">
-          <Input />
+          <Input placeholder="Enter Name" name="userName" />
           <Button title="Submit" />
         </form>
       </div>
