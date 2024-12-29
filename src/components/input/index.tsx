@@ -6,6 +6,9 @@ export const Input: React.FC<inputProps> = ({
   isRequired = true,
   name = "",
   maxLength,
+  errorMessage = "",
+  value = "",
+  handleChange,
 }) => {
   return (
     <>
@@ -16,16 +19,19 @@ export const Input: React.FC<inputProps> = ({
         <input
           id={name}
           type={type}
-          className="peer p-2 border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0"
+          className="peer p-2 border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 w-full"
           placeholder={placeholder}
           name={name}
           required={isRequired}
           maxLength={maxLength}
+          value={value}
+          onChange={(e) => handleChange?.(e, name)}
         />
         <span className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
           {placeholder}
         </span>
       </label>
+      {errorMessage && <p className="text-red-500 text-xs">{errorMessage}</p>}
     </>
   );
 };

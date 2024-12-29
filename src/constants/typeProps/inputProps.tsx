@@ -6,4 +6,7 @@ export type inputProps = {
   isRequired?: boolean;
   name: string;
   maxLength?: number;
+  errorMessage?: string;
+  value?: string;
+  handleChange?: (e: React.ChangeEvent<HTMLInputElement>, name: string) => void;
 };
