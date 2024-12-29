@@ -1,14 +1,37 @@
-import { Button } from "./components/button";
-import { Input } from "./components/input";
+import { useMemo } from "react";
+import { DynamicForm } from "./components/DynamicForm";
 
 function App() {
+  const formRequirments = useMemo(
+    () => [
+      {
+        name: "userName",
+        type: "text",
+        placeholder: "Enter Name",
+      },
+      {
+        name: "userEmail",
+        type: "email",
+        placeholder: "Enter Email",
+      },
+      {
+        name: "userMobile",
+        type: "number",
+        placeholder: "Enter Mobile Number",
+        maxLength: 10,
+      },
+      // {
+      //   name: "userPassword",
+      //   type: "password",
+      //   placeholder: "Enter Password",
+      // },
+    ],
+    []
+  );
   return (
     <>
-      <div className="flex justify-center items-center">
-        <form className="flex flex-col gap-4">
-          <Input placeholder="Enter Name" name="userName" />
-          <Button title="Submit" />
-        </form>
+      <div>
+        <DynamicForm formRequirments={formRequirments} />
       </div>
     </>
   );

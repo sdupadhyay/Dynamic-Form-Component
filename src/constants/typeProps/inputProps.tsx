@@ -5,4 +5,5 @@ export type inputProps = {
   placeholder: string;
   isRequired?: boolean;
   name: string;
+  maxLength?: number;
 };
