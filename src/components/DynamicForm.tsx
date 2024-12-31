@@ -2,6 +2,12 @@ import React, { useState } from "react";
 import { Input } from "./input";
 import { Button } from "./button";
 import { formRequirmentsProps } from "../constants/typeProps/formRequirmentsProps";
+import { validatePhoneNumber } from "../constants";
+import {
+  emailValidation,
+  phonenumberValidation,
+  validateEmail,
+} from "../constants";
 
 export const DynamicForm: React.FC<{
   formRequirments: formRequirmentsProps[];
@@ -15,7 +21,9 @@ export const DynamicForm: React.FC<{
     userMobile: "",
     userName: "",
   });
-  const [formError, setFormError] = useState({});
+  const [formError, setFormError] = useState<{
+    [key: string]: { message: string; isError: boolean };
+  }>({});
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     let errors: any = {};
@@ -34,11 +42,45 @@ export const DynamicForm: React.FC<{
   //console.log(formError);
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement>,
-    name: string
+    name: string,
+    inputValidationType?: string
   ) => {
     //console.log(e.target.value, name);
-    setFormError({ ...formError, [name]: "" });
+    // setFormError({ ...formError, [name]: "" });
     setFormState({ ...formState, [name]: e.target.value });
+    switch (inputValidationType) {
+      case emailValidation:
+        if (!validateEmail(e.target.value)) {
+          //setInputError("Not an Valid Email");
+          setFormError({
+            ...formError,
+            [name]: { message: "Not an Valid Email", isError: true },
+          });
+        } else
+          setFormError({
+            ...formError,
+            [name]: { message: "Valide Email", isError: false },
+          });
+        break;
+      case phonenumberValidation:
+        if (!validatePhoneNumber(e.target.value)) {
+          // setInputError("Not an Valid Mobile Number");
+          setFormError({
+            ...formError,
+            [name]: {
+              message: "Not an Valid Mobile Number",
+              isError: true,
+            },
+          });
+        } else
+          setFormError({
+            ...formError,
+            [name]: { message: "Valide Mobile Number", isError: false },
+          });
+        break;
+      default:
+        break;
+    }
   };
   return (
     <>

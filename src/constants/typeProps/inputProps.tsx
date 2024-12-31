@@ -6,8 +6,12 @@ export type inputProps = {
   isRequired?: boolean;
   name: string;
   maxLength?: number;
-  errorMessage?: string;
+  errorMessage?: { message: string; isError: boolean };
   value?: string;
-  handleChange?: (e: React.ChangeEvent<HTMLInputElement>, name: string) => void;
+  handleChange?: (
+    e: React.ChangeEvent<HTMLInputElement>,
+    name: string,
+    inputValidationType?: string
+  ) => void;
   inputValidationType?: string;
 };

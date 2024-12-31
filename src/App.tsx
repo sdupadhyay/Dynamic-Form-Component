@@ -23,7 +23,7 @@ function App() {
         type: "number",
         placeholder: "Enter Mobile Number",
         maxLength: 10,
-        isRequired: false,
+        isRequired: true,
         validationType: phonenumberValidation,
       },
       // {

@@ -1,49 +1,17 @@
-import { useState } from "react";
 import { inputProps } from "../../constants/typeProps/inputProps";
-import {
-  emailValidation,
-  phonenumberValidation,
-  validateEmail,
-  validatePhoneNumber,
-} from "../../constants";
-
 export const Input: React.FC<inputProps> = ({
   type = "text",
   placeholder,
   isRequired = true,
   name = "",
   maxLength,
-  errorMessage = "",
+  errorMessage = { message: "", isError: false },
   value = "",
   handleChange,
   inputValidationType,
 }) => {
-  const [inputError, setInputError] = useState<{
-    message: string;
-    isError: boolean;
-  }>({ message: "", isError: false });
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    handleChange?.(e, name);
-    switch (inputValidationType) {
-      case emailValidation:
-        if (!validateEmail(e.target.value)) {
-          //setInputError("Not an Valid Email");
-          setInputError({ message: "Not an Valid Email", isError: true });
-        } else setInputError({ message: "Valide Email", isError: false });
-        break;
-      case phonenumberValidation:
-        if (!validatePhoneNumber(e.target.value)) {
-          // setInputError("Not an Valid Mobile Number");
-          setInputError({
-            message: "Not an Valid Mobile Number",
-            isError: true,
-          });
-        } else
-          setInputError({ message: "Valide Mobile Number", isError: false });
-        break;
-      default:
-        break;
-    }
+    handleChange?.(e, name, inputValidationType);
   };
 
   return (
@@ -67,13 +35,13 @@ export const Input: React.FC<inputProps> = ({
           {placeholder}
         </span>
       </label>
-      {(errorMessage || inputError?.message) && (
+      {errorMessage?.message && (
         <p
           className={`text-${
-            inputError?.isError ? "red" : "green"
+            errorMessage?.isError ? "red" : "green"
           }-500 text-xs`}
         >
-          {errorMessage || inputError?.message}
+          {errorMessage?.message}
         </p>
       )}
     </>
