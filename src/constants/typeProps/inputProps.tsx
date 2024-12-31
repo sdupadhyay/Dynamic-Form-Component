@@ -9,4 +9,5 @@ export type inputProps = {
   errorMessage?: string;
   value?: string;
   handleChange?: (e: React.ChangeEvent<HTMLInputElement>, name: string) => void;
+  inputValidationType?: string;
 };

@@ -6,17 +6,38 @@ import { formRequirmentsProps } from "../constants/typeProps/formRequirmentsProp
 export const DynamicForm: React.FC<{
   formRequirments: formRequirmentsProps[];
 }> = ({ formRequirments }) => {
-  const [formState, setFormState] = useState({});
+  const [formState, setFormState] = useState<{
+    userEmail: string;
+    userMobile: number | string;
+    userName: string;
+  }>({
+    userEmail: "",
+    userMobile: "",
+    userName: "",
+  });
+  const [formError, setFormError] = useState({});
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    let errors: any = {};
+    formRequirments.forEach((item) => {
+      if (item.isRequired && !formState[item.name]) {
+        errors[item.name] = `${item.name} is required`;
+      }
+    });
+    setFormError(errors);
+    if (Object.keys(errors).length > 0) {
+      return;
+    }
     setFormState({});
     console.log(formState);
   };
+  //console.log(formError);
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     name: string
   ) => {
     //console.log(e.target.value, name);
+    setFormError({ ...formError, [name]: "" });
     setFormState({ ...formState, [name]: e.target.value });
   };
   return (
@@ -38,6 +59,9 @@ export const DynamicForm: React.FC<{
               handleChange={handleChange}
               //@ts-ignore
               value={formState[item.name]}
+              //@ts-ignore
+              errorMessage={formError[item.name]}
+              inputValidationType={item?.validationType}
             />
           ))}
           <Button title="Submit" />

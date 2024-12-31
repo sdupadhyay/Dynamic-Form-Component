@@ -3,4 +3,6 @@ export type formRequirmentsProps = {
   type: string;
   placeholder: string;
   maxLength?: number;
+  isRequired: boolean;
+  validationType?: string;
 };

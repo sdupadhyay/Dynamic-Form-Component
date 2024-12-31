@@ -1,4 +1,11 @@
+import { useState } from "react";
 import { inputProps } from "../../constants/typeProps/inputProps";
+import {
+  emailValidation,
+  phonenumberValidation,
+  validateEmail,
+  validatePhoneNumber,
+} from "../../constants";
 
 export const Input: React.FC<inputProps> = ({
   type = "text",
@@ -9,7 +16,36 @@ export const Input: React.FC<inputProps> = ({
   errorMessage = "",
   value = "",
   handleChange,
+  inputValidationType,
 }) => {
+  const [inputError, setInputError] = useState<{
+    message: string;
+    isError: boolean;
+  }>({ message: "", isError: false });
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    handleChange?.(e, name);
+    switch (inputValidationType) {
+      case emailValidation:
+        if (!validateEmail(e.target.value)) {
+          //setInputError("Not an Valid Email");
+          setInputError({ message: "Not an Valid Email", isError: true });
+        } else setInputError({ message: "Valide Email", isError: false });
+        break;
+      case phonenumberValidation:
+        if (!validatePhoneNumber(e.target.value)) {
+          // setInputError("Not an Valid Mobile Number");
+          setInputError({
+            message: "Not an Valid Mobile Number",
+            isError: true,
+          });
+        } else
+          setInputError({ message: "Valide Mobile Number", isError: false });
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <>
       <label
@@ -25,13 +61,21 @@ export const Input: React.FC<inputProps> = ({
           required={isRequired}
           maxLength={maxLength}
           value={value}
-          onChange={(e) => handleChange?.(e, name)}
+          onChange={onChange}
         />
         <span className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
           {placeholder}
         </span>
       </label>
-      {errorMessage && <p className="text-red-500 text-xs">{errorMessage}</p>}
+      {(errorMessage || inputError?.message) && (
+        <p
+          className={`text-${
+            inputError?.isError ? "red" : "green"
+          }-500 text-xs`}
+        >
+          {errorMessage || inputError?.message}
+        </p>
+      )}
     </>
   );
 };
