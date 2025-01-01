@@ -8,6 +8,7 @@ import {
   phonenumberValidation,
   validateEmail,
 } from "../constants";
+import { SelectBox } from "./selectBox";
 
 export const DynamicForm: React.FC<{
   formRequirments: formRequirmentsProps[];
@@ -29,10 +30,14 @@ export const DynamicForm: React.FC<{
     let errors: any = {};
     formRequirments.forEach((item) => {
       if (item.isRequired && !formState[item.name]) {
-        errors[item.name] = `${item.name} is required`;
+        errors[item.name] = {
+          message: `${item.name} is required`,
+          isError: true,
+        };
       }
     });
     setFormError(errors);
+    //console.log(errors);
     if (Object.keys(errors).length > 0) {
       return;
     }
@@ -45,8 +50,6 @@ export const DynamicForm: React.FC<{
     name: string,
     inputValidationType?: string
   ) => {
-    //console.log(e.target.value, name);
-    // setFormError({ ...formError, [name]: "" });
     setFormState({ ...formState, [name]: e.target.value });
     switch (inputValidationType) {
       case emailValidation:
@@ -94,18 +97,37 @@ export const DynamicForm: React.FC<{
               Dynamic Form
             </h2>
           </div>
-          {formRequirments?.map((item, index) => (
-            <Input
-              key={index}
-              {...item}
-              handleChange={handleChange}
-              //@ts-ignore
-              value={formState[item.name]}
-              //@ts-ignore
-              errorMessage={formError[item.name]}
-              inputValidationType={item?.validationType}
-            />
-          ))}
+          {formRequirments?.map((item, index) => {
+            switch (item.componentType) {
+              case "input":
+                return (
+                  <Input
+                    key={index}
+                    {...item}
+                    handleChange={handleChange}
+                    //@ts-ignore
+                    value={formState[item.name]}
+                    //@ts-ignore
+                    errorMessage={formError[item.name]}
+                    inputValidationType={item?.validationType}
+                  />
+                );
+              case "select":
+                return (
+                  <SelectBox
+                    key={index}
+                    label={item.placeholder}
+                    id={item.id}
+                    name={item.name}
+                    //@ts-ignore
+                    handleChange={handleChange}
+                    errorMessage={formError[item.name]}
+                  />
+                );
+              default:
+                return null;
+            }
+          })}
           <Button title="Submit" />
         </form>
       </div>

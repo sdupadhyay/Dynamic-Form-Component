@@ -10,6 +10,7 @@ function App() {
         type: "text",
         placeholder: "Enter Name",
         isRequired: true,
+        componentType: "input",
       },
       {
         name: "userEmail",
@@ -17,6 +18,7 @@ function App() {
         placeholder: "Enter Email",
         isRequired: true,
         validationType: emailValidation,
+        componentType: "input",
       },
       {
         name: "userMobile",
@@ -25,12 +27,15 @@ function App() {
         maxLength: 10,
         isRequired: true,
         validationType: phonenumberValidation,
+        componentType: "input",
       },
-      // {
-      //   name: "userPassword",
-      //   type: "password",
-      //   placeholder: "Enter Password",
-      // },
+      {
+        name: "userState",
+        placeholder: "Select State",
+        componentType: "select",
+        isRequired: true,
+        validationType: "",
+      },
     ],
     []
   );
