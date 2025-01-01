@@ -25,7 +25,8 @@ export const DynamicForm: React.FC<{
   const [formError, setFormError] = useState<{
     [key: string]: { message: string; isError: boolean };
   }>({});
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const [loading, setLoading] = useState(false);
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     let errors: any = {};
     formRequirments.forEach((item) => {
@@ -39,9 +40,14 @@ export const DynamicForm: React.FC<{
     setFormError(errors);
     //console.log(errors);
     if (Object.keys(errors).length > 0) {
+      setLoading(false);
       return;
     }
+    setLoading(true);
+    const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
+    await delay(3000);
     setFormState({});
+    setLoading(false);
     console.log(formState);
   };
   //console.log(formError);
@@ -51,6 +57,7 @@ export const DynamicForm: React.FC<{
     inputValidationType?: string
   ) => {
     setFormState({ ...formState, [name]: e.target.value });
+    setFormError({});
     switch (inputValidationType) {
       case emailValidation:
         if (!validateEmail(e.target.value)) {
@@ -128,7 +135,7 @@ export const DynamicForm: React.FC<{
                 return null;
             }
           })}
-          <Button title="Submit" />
+          <Button loading={loading} title="Submit" />
         </form>
       </div>
     </>
