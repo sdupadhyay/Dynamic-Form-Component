@@ -9,6 +9,7 @@ import {
   validateEmail,
 } from "../constants";
 import { SelectBox } from "./selectBox";
+import { RadioButtons } from "./radioButtons";
 
 export const DynamicForm: React.FC<{
   formRequirments: formRequirmentsProps[];
@@ -139,6 +140,20 @@ export const DynamicForm: React.FC<{
                     errorMessage={formError[item.name]}
                     data={item.data}
                   />
+                );
+              case "genderRadio":
+                return (
+                  <div className="flex gap-4">
+                    {item?.radioProps?.map((ele, ind) => (
+                      <RadioButtons
+                        key={ind}
+                        id={ele.id}
+                        name={ele.name}
+                        value={ele.value}
+                        label={ele.label}
+                      />
+                    ))}
+                  </div>
                 );
               default:
                 return null;

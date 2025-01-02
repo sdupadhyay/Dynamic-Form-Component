@@ -11,12 +11,12 @@ export const SelectBox: React.FC<selectProps> = ({
 }) => {
   return (
     <>
-      <label
+      {/* <label
         htmlFor={id}
         className="block text-sm font-medium text-gray-900 dark:text-white"
       >
         {label}
-      </label>
+      </label> */}
       <select
         id={id}
         value={value}

@@ -75,6 +75,18 @@ function App() {
           { value: "WB", name: "West Bengal" },
         ],
       },
+      {
+        componentType: "genderRadio",
+        radioProps: [
+          { id: "male", value: "male", name: "userGender", label: "Male" },
+          {
+            id: "female",
+            value: "female",
+            name: "userGender",
+            label: "Female",
+          },
+        ],
+      },
     ],
     []
   );

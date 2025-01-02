@@ -8,4 +8,10 @@ export type formRequirmentsProps = {
   componentType: string;
   id?: string;
   data?: Array<{ value: string; name: string }>;
+  radioProps?: Array<{
+    id: string;
+    value: string;
+    name: string;
+    label: string;
+  }>;
 };
