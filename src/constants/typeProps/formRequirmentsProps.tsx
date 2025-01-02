@@ -7,4 +7,5 @@ export type formRequirmentsProps = {
   validationType?: string;
   componentType: string;
   id?: string;
+  data?: Array<{ value: string; name: string }>;
 };

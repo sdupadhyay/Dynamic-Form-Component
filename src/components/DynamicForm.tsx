@@ -17,10 +17,12 @@ export const DynamicForm: React.FC<{
     userEmail: string;
     userMobile: number | string;
     userName: string;
+    userState: string;
   }>({
     userEmail: "",
     userMobile: "",
     userName: "",
+    userState: "",
   });
   const [formError, setFormError] = useState<{
     [key: string]: { message: string; isError: boolean };
@@ -46,7 +48,12 @@ export const DynamicForm: React.FC<{
     setLoading(true);
     const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
     await delay(3000);
-    setFormState({});
+    setFormState({
+      userEmail: "",
+      userMobile: "",
+      userState: "",
+      userName: "",
+    });
     setLoading(false);
     console.log(formState);
   };
@@ -126,9 +133,11 @@ export const DynamicForm: React.FC<{
                     label={item.placeholder}
                     id={item.id}
                     name={item.name}
+                    value={formState[item.name]}
                     //@ts-ignore
                     handleChange={handleChange}
                     errorMessage={formError[item.name]}
+                    data={item.data}
                   />
                 );
               default:

@@ -6,6 +6,8 @@ export const SelectBox: React.FC<selectProps> = ({
   name,
   handleChange,
   errorMessage,
+  data,
+  value,
 }) => {
   return (
     <>
@@ -17,14 +19,16 @@ export const SelectBox: React.FC<selectProps> = ({
       </label>
       <select
         id={id}
+        value={value}
         onChange={(e) => handleChange?.(e, name, "")}
         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
       >
         <option value={""}>{label}</option>
-        <option value="US">United States</option>
-        <option value="CA">Canada</option>
-        <option value="FR">France</option>
-        <option value="DE">Germany</option>
+        {data?.map((ele, ind) => (
+          <option key={ind} value={ele?.value}>
+            {ele?.name}
+          </option>
+        ))}
       </select>
       {errorMessage?.message && (
         <p
