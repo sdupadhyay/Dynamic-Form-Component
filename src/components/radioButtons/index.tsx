@@ -5,6 +5,7 @@ export const RadioButtons: React.FC<radioProps> = ({
   value,
   name,
   label,
+  handleChange,
 }) => {
   return (
     <>
@@ -14,6 +15,7 @@ export const RadioButtons: React.FC<radioProps> = ({
           type="radio"
           value={value}
           name={name}
+          onChange={(e) => handleChange?.(e, name)}
           className="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
         />
         <label

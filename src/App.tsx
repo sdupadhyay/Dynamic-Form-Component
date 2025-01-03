@@ -77,6 +77,8 @@ function App() {
       },
       {
         componentType: "genderRadio",
+        isRequired: true,
+        name: "userGender",
         radioProps: [
           { id: "male", value: "male", name: "userGender", label: "Male" },
           {

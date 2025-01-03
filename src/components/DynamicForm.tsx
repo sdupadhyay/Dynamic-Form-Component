@@ -19,11 +19,13 @@ export const DynamicForm: React.FC<{
     userMobile: number | string;
     userName: string;
     userState: string;
+    userGender: string;
   }>({
     userEmail: "",
     userMobile: "",
     userName: "",
     userState: "",
+    userGender: "",
   });
   const [formError, setFormError] = useState<{
     [key: string]: { message: string; isError: boolean };
@@ -54,6 +56,7 @@ export const DynamicForm: React.FC<{
       userMobile: "",
       userState: "",
       userName: "",
+      userGender: "",
     });
     setLoading(false);
     console.log(formState);
@@ -65,7 +68,7 @@ export const DynamicForm: React.FC<{
     inputValidationType?: string
   ) => {
     setFormState({ ...formState, [name]: e.target.value });
-    setFormError({});
+    setFormError({ ...formError, [name]: { message: "", isError: false } });
     switch (inputValidationType) {
       case emailValidation:
         if (!validateEmail(e.target.value)) {
@@ -143,17 +146,27 @@ export const DynamicForm: React.FC<{
                 );
               case "genderRadio":
                 return (
-                  <div className="flex gap-4">
-                    {item?.radioProps?.map((ele, ind) => (
-                      <RadioButtons
-                        key={ind}
-                        id={ele.id}
-                        name={ele.name}
-                        value={ele.value}
-                        label={ele.label}
-                      />
-                    ))}
-                  </div>
+                  <>
+                    <div key={index}>
+                      <div className="flex gap-4">
+                        {item?.radioProps?.map((ele, ind) => (
+                          <RadioButtons
+                            key={ind}
+                            id={ele.id}
+                            name={ele.name}
+                            value={ele.value}
+                            label={ele.label}
+                            handleChange={handleChange}
+                          />
+                        ))}
+                      </div>
+                      {formError[item.name]?.isError && (
+                        <span className="text-red-500 text-sm">
+                          {formError[item.name]?.message}
+                        </span>
+                      )}
+                    </div>
+                  </>
                 );
               default:
                 return null;
