@@ -10,6 +10,7 @@ import {
 } from "../constants";
 import { SelectBox } from "./selectBox";
 import { RadioButtons } from "./radioButtons";
+import { Checkbox } from "./checkbox";
 
 export const DynamicForm: React.FC<{
   formRequirments: formRequirmentsProps[];
@@ -172,6 +173,11 @@ export const DynamicForm: React.FC<{
                 return null;
             }
           })}
+          <div className="flex gap-2">
+            <Checkbox />
+            <Checkbox />
+            <Checkbox />
+          </div>
           <Button loading={loading} title="Submit" />
         </form>
       </div>
