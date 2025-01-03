@@ -21,12 +21,14 @@ export const DynamicForm: React.FC<{
     userName: string;
     userState: string;
     userGender: string;
+    userHobbies: string[];
   }>({
     userEmail: "",
     userMobile: "",
     userName: "",
     userState: "",
     userGender: "",
+    userHobbies: [],
   });
   const [formError, setFormError] = useState<{
     [key: string]: { message: string; isError: boolean };
@@ -36,7 +38,10 @@ export const DynamicForm: React.FC<{
     e.preventDefault();
     let errors: any = {};
     formRequirments.forEach((item) => {
-      if (item.isRequired && !formState[item.name]) {
+      if (
+        item.isRequired &&
+        (!formState[item.name] || formState[item.name]?.length == 0)
+      ) {
         errors[item.name] = {
           message: `${item.name} is required`,
           isError: true,
@@ -44,7 +49,7 @@ export const DynamicForm: React.FC<{
       }
     });
     setFormError(errors);
-    //console.log(errors);
+    // console.log(errors);
     if (Object.keys(errors).length > 0) {
       setLoading(false);
       return;
@@ -58,6 +63,7 @@ export const DynamicForm: React.FC<{
       userState: "",
       userName: "",
       userGender: "",
+      userHobbies: [],
     });
     setLoading(false);
     console.log(formState);
@@ -102,6 +108,19 @@ export const DynamicForm: React.FC<{
         break;
       default:
         break;
+    }
+  };
+  const handleCheckboxChange = (value: string) => {
+    if (formState.userHobbies.includes(value)) {
+      const updatedState = formState.userHobbies.filter(
+        (item) => item !== value
+      );
+      setFormState({ ...formState, userHobbies: updatedState });
+    } else {
+      setFormState({
+        ...formState,
+        userHobbies: [...formState.userHobbies, value],
+      });
     }
   };
   return (
@@ -169,15 +188,34 @@ export const DynamicForm: React.FC<{
                     </div>
                   </>
                 );
+              case "checkbox":
+                return (
+                  <>
+                    <div className="flex gap-2" key={index}>
+                      {item?.checkboxProps?.map((ele, ind) => (
+                        <Checkbox
+                          key={ind}
+                          id={ele.id}
+                          name={ele.name}
+                          label={ele.label}
+                          value={ele.value}
+                          handleCheckboxChange={handleCheckboxChange}
+                        />
+                      ))}
+                    </div>
+                    <div>
+                      {formError[item.name]?.isError && (
+                        <span className="text-red-500 text-sm">
+                          {formError[item.name]?.message}
+                        </span>
+                      )}
+                    </div>
+                  </>
+                );
               default:
                 return null;
             }
           })}
-          <div className="flex gap-2">
-            <Checkbox />
-            <Checkbox />
-            <Checkbox />
-          </div>
           <Button loading={loading} title="Submit" />
         </form>
       </div>

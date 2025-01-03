@@ -89,6 +89,31 @@ function App() {
           },
         ],
       },
+      {
+        componentType: "checkbox",
+        isRequired: true,
+        name: "userHobbies",
+        checkboxProps: [
+          {
+            id: "cricket",
+            value: "cricket",
+            name: "userHobbies",
+            label: "Cricket",
+          },
+          {
+            id: "football",
+            value: "football",
+            name: "userHobbies",
+            label: "Football",
+          },
+          {
+            id: "badminton",
+            value: "badminton",
+            name: "userHobbies",
+            label: "Badminton",
+          },
+        ],
+      },
     ],
     []
   );

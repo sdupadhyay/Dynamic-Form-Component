@@ -14,4 +14,10 @@ export type formRequirmentsProps = {
     name: string;
     label: string;
   }>;
+  checkboxProps?: Array<{
+    id: string;
+    value: string;
+    name: string;
+    label: string;
+  }>;
 };
