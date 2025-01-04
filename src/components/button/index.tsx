@@ -3,7 +3,6 @@ import { buttonProps } from "../../constants/typeProps/buttonProps";
 
 export const Button: React.FC<buttonProps> = ({
   title = "Submit",
-  classes = "",
   loading,
 }) => {
   return (

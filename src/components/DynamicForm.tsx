@@ -69,6 +69,7 @@ export const DynamicForm: React.FC<{
     console.log(formState);
   };
   //console.log(formError);
+  //console.log(formState);
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     name: string,
@@ -111,6 +112,10 @@ export const DynamicForm: React.FC<{
     }
   };
   const handleCheckboxChange = (value: string) => {
+    setFormError({
+      ...formError,
+      userHobbies: { message: "", isError: false },
+    });
     if (formState.userHobbies.includes(value)) {
       const updatedState = formState.userHobbies.filter(
         (item) => item !== value
@@ -191,24 +196,27 @@ export const DynamicForm: React.FC<{
               case "checkbox":
                 return (
                   <>
-                    <div className="flex gap-2" key={index}>
-                      {item?.checkboxProps?.map((ele, ind) => (
-                        <Checkbox
-                          key={ind}
-                          id={ele.id}
-                          name={ele.name}
-                          label={ele.label}
-                          value={ele.value}
-                          handleCheckboxChange={handleCheckboxChange}
-                        />
-                      ))}
-                    </div>
-                    <div>
-                      {formError[item.name]?.isError && (
-                        <span className="text-red-500 text-sm">
-                          {formError[item.name]?.message}
-                        </span>
-                      )}
+                    <div key={index}>
+                      <div className="flex gap-2" key={index}>
+                        {item?.checkboxProps?.map((ele, ind) => (
+                          <Checkbox
+                            key={ind}
+                            id={ele.id}
+                            name={ele.name}
+                            label={ele.label}
+                            value={ele.value}
+                            handleCheckboxChange={handleCheckboxChange}
+                            selected={formState.userHobbies.includes(ele.value)}
+                          />
+                        ))}
+                      </div>
+                      <div>
+                        {formError[item.name]?.isError && (
+                          <span className="text-red-500 text-sm">
+                            {formError[item.name]?.message}
+                          </span>
+                        )}
+                      </div>
                     </div>
                   </>
                 );

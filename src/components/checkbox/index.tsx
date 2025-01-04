@@ -6,6 +6,7 @@ export const Checkbox: React.FC<checkboxProps> = ({
   value,
   name,
   handleCheckboxChange,
+  selected,
 }) => {
   return (
     <>
@@ -13,6 +14,8 @@ export const Checkbox: React.FC<checkboxProps> = ({
         <input
           id={id}
           type="checkbox"
+          //selected={selected}
+          checked={selected}
           value={value}
           name={name}
           onChange={() => handleCheckboxChange?.(value)}

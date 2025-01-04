@@ -4,4 +4,5 @@ export type checkboxProps = {
   name: string;
   label: string;
   handleCheckboxChange?: (value: string) => void;
+  selected: boolean;
 };
