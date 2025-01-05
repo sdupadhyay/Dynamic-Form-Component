@@ -4,4 +4,5 @@ export type radioProps = {
   name: string;
   label: string;
   handleChange?: (e: React.ChangeEvent<HTMLInputElement>, name: string) => void;
+  checked?: boolean;
 };

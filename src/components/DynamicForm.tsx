@@ -182,6 +182,7 @@ export const DynamicForm: React.FC<{
                             value={ele.value}
                             label={ele.label}
                             handleChange={handleChange}
+                            checked={formState.userGender === ele.value}
                           />
                         ))}
                       </div>
